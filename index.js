@@ -53,3 +53,45 @@ function generatePlaylist(guardians, songs) {
 // Call generatePlaylist and display the playlists for each Guardian
 let playlist = generatePlaylist(guardians, songs);
 console.log(playlist)
+
+
+// Displaying the playlists on the html 
+document.addEventListener('DOMContentLoaded', () => {
+    // getting the div too display the playlists
+    let playlistsDiv = document.getElementById('playlists');
+
+    // map() method to loop each guardian in the playlist
+    Object.keys(playlist).map(guardian => {
+        // div created to hold guardian's playlist
+        let guardianSection = document.createElement('div');
+        // add classlist to the playlist div for styling
+        guardianSection.classList.add('playlist');
+
+        // header created to display guardian name in bold
+        let guardianHeading = document.createElement('h2');
+        // setting heading text
+        guardianHeading.textContent = `${guardian}'s Playlist`;
+        // adding the heading to guardian's playlist div
+        guardianSection.appendChild(guardianHeading);
+
+        // ul element created to store list of songs
+        let songList = document.createElement('ul');
+
+        // map() method to loop through each song
+        playlist[guardian].map(song => {
+            // list element created for each song
+            let songItem = document.createElement('li');
+            // add classlist to song list elements for styling
+            songItem.classList.add('song');
+            // create inner content for son items, with templateliteral to add span element and classlist wrapping the song title with span 
+            songItem.innerHTML = `<span class="song-title">${song.title}</span> by ${song.artist}`;
+            //add created songItem to the list
+            songList.appendChild(songItem);
+        });
+        
+        //add the songlist section in the guardian section
+        guardianSection.appendChild(songList);
+        //add the guardian section to the playlist div 
+        playlistsDiv.appendChild(guardianSection);
+    });
+});
